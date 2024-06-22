@@ -11,7 +11,7 @@ class Server {
   middlewares() {
     this.server.use(express.json());
   }
- 
+
   routes() {
     fs.readdirSync(`${process.cwd()}/src/routers`).map(async (file) => {
       this.server.use((await import("./routers/" + file)).default);
