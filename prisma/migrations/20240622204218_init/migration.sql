@@ -1,8 +1,8 @@
 -- CreateTable
 CREATE TABLE `company` (
     `id` VARCHAR(191) NOT NULL,
-    `profile` LONGTEXT NOT NULL,
-    `metadata` LONGTEXT NOT NULL,
+    `profile` JSON NOT NULL,
+    `metadata` JSON NOT NULL,
     `entityId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Company_entityId_key`(`entityId`),
@@ -13,7 +13,7 @@ CREATE TABLE `company` (
 CREATE TABLE `cv` (
     `id` VARCHAR(191) NOT NULL,
     `job_position` VARCHAR(191) NOT NULL,
-    `metadata` LONGTEXT NOT NULL,
+    `metadata` JSON NOT NULL,
     `userId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `CV_userId_key`(`userId`),
@@ -33,8 +33,8 @@ CREATE TABLE `entity` (
 -- CreateTable
 CREATE TABLE `user` (
     `id` VARCHAR(191) NOT NULL,
-    `profile` LONGTEXT NOT NULL,
-    `metadata` LONGTEXT NOT NULL,
+    `profile` JSON NOT NULL,
+    `metadata` JSON NOT NULL,
     `entityId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `User_entityId_key`(`entityId`),
