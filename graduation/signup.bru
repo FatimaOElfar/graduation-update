@@ -1,18 +1,11 @@
 meta {
-  name: signup
+  name: signUp
   type: http
-  seq: 2
+  seq: 3
 }
 
 post {
   url: http://localhost:3000/user/signup
-  body: json
+  body: none
   auth: none
-}
-
-body:json {
-  {
-    "username": "test-username",
-    "password": "test-password"
-  }
 }

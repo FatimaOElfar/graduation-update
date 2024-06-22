@@ -5,15 +5,15 @@ export const createNewUser = async (user) => {
     data: {
       metadata: {},
       profile: {
-        firstName: "First",
-        lastName: "Last",
-        email: "email@example.com",
-        address: "address",
-        phoneNumber: "phoneNumber",
-        state: "state",
-        city: "city",
-        gender: "gender",
-        birthDate: new Date("2024-06-22T19:26:23.761Z"),
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        address: user.address,
+        phoneNumber: user.phoneNumber,
+        state: user.state,
+        city: user.city,
+        gender: user.gender,
+        birthDate: user.birthDate,
       },
       entity: {
         create: {
