@@ -1,4 +1,1 @@
-const getCv = (data) => {
-  console.log(data);
-};
-export default getCv;
+export const getCV = async (req, res) => {};
