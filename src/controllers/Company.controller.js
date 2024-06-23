@@ -1,6 +1,7 @@
 import {
   createNewCompany,
   getCompanyByCompanyName,
+  getCompanyByEmail,
 } from "../services/company.service.js";
 import bcrypt from "bcrypt";
 
@@ -36,7 +37,6 @@ export const signUpCompany = async (req, res) => {
       username,
       password: hashedPassword,
       companyName,
-      password,
       email,
       phoneNumber,
       address,
@@ -56,14 +56,14 @@ export const signUpCompany = async (req, res) => {
   }
 };
 export const signInCompany = async (req, res) => {
-  const { username, password, email } = req.body;
-  const company = await getCompanyByCompanyName(username);
+  const { email, password } = req.body;
+  const company = await getCompanyByEmail(email);
   if (!company || !company?.entity) {
     return res.status(400).json({ message: "Company not found", error: 1 });
   }
-  if (company?.entity?.email !== email) {
-    return res.status(400).json({ message: "Invalid email", error: 1 });
-  }
+  // if (company?.entity?.email !== email) {
+  //   return res.status(400).json({ message: "Invalid email", error: 1 });
+  // }
   const isPasswordValid = await bcrypt.compare(
     password,
     company?.entity?.hashed_password
@@ -71,9 +71,7 @@ export const signInCompany = async (req, res) => {
   if (!isPasswordValid) {
     return res.status(400).json({ message: "Invalid password", error: 1 });
   }
-  delete user.entity;
-  delete user.entityId;
-  return res
-    .status(200)
-    .json({ message: "Company signed in successfully", company });
+  delete company.entity;
+  delete company.entityId;
+  return res.status(200).json({ message: "Company signed in successfully" });
 };

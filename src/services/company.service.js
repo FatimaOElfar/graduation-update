@@ -16,7 +16,8 @@ export const createNewCompany = async (company) => {
       },
       entity: {
         create: {
-          username: company.username,
+          email: company.email,
+          username: company.companyName,
           hashed_password: company.password,
         },
       },
@@ -27,6 +28,13 @@ export const createNewCompany = async (company) => {
 export const getCompanyByCompanyName = async (companyName) => {
   return await prisma.company.findFirst({
     where: { entity: { username: companyName } },
+    include: { entity: true },
+  });
+};
+
+export const getCompanyByEmail = async (email) => {
+  return await prisma.company.findFirst({
+    where: { entity: { email } },
     include: { entity: true },
   });
 };

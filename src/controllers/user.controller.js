@@ -1,11 +1,16 @@
-import { getUserByUsername, createNewUser } from "../services/user.service.js";
+import {
+  getUserByUsername,
+  createNewUser,
+  getUserByEmail,
+} from "../services/user.service.js";
 import bcrypt from "bcrypt";
 export const signIn = async (req, res) => {
-  const { username, password } = req.body;
-  const user = await getUserByUsername(username);
+  const { password, email } = req.body;
+  const user = await getUserByEmail(email);
   if (!user || !user?.entity) {
-    return res.status(400).json({ message: "User not found", error: 1 });
+    return res.status(400).json({ message: "Email not found", error: 1 });
   }
+
   const isPasswordValid = await bcrypt.compare(
     password,
     user?.entity?.hashed_password
@@ -13,24 +18,18 @@ export const signIn = async (req, res) => {
   if (!isPasswordValid) {
     return res.status(400).json({ message: "Invalid password", error: 1 });
   }
+
+  // const profile = {
+  //   ...user.profile,
+  //   username: user.entity.username,
+
+  // };
   delete user.entity;
   delete user.entityId;
-  return res.status(200).json({ message: "User signed in successfully", user });
+  return res.status(200).json({ message: "User signed in successfully" });
 };
 export const signUp = async (req, res) => {
-  const {
-    username,
-    password,
-    firstName,
-    lastName,
-    email,
-    address,
-    phoneNumber,
-    state,
-    city,
-    gender,
-    birthDate,
-  } = req.body;
+  const { username, password } = req.body;
 
   try {
     // Check if the user already exists
@@ -40,22 +39,10 @@ export const signUp = async (req, res) => {
     }
 
     // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    req.body.password = await bcrypt.hash(password, 10);
 
     // Create new user
-    const newUser = await createNewUser({
-      username,
-      password: hashedPassword,
-      firstName,
-      lastName,
-      email,
-      address,
-      phoneNumber,
-      state,
-      city,
-      gender,
-      birthDate,
-    });
+    const newUser = await createNewUser(req.body);
 
     // Respond with success message
     return res
