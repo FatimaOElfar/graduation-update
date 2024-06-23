@@ -5,7 +5,19 @@ import {
 import bcrypt from "bcrypt";
 
 export const signUpCompany = async (req, res) => {
-  const { username, password } = req.body;
+  const {
+    username,
+    password: hashedPassword,
+    companyName,
+    password,
+    email,
+    phoneNumber,
+    address,
+    TIN,
+    yearOfEstablish,
+    website,
+    companySize,
+  } = req.body;
 
   try {
     // Check if the user already exists
@@ -23,6 +35,15 @@ export const signUpCompany = async (req, res) => {
     const newCompany = await createNewCompany({
       username,
       password: hashedPassword,
+      companyName,
+      password,
+      email,
+      phoneNumber,
+      address,
+      TIN,
+      yearOfEstablish,
+      website,
+      companySize,
     });
 
     // Respond with success message
