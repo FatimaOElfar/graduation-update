@@ -25,8 +25,8 @@ export const createNewCompany = async (company) => {
 };
 
 export const getCompanyByCompanyName = async (companyName) => {
-  return await prisma.companyName.findFirst({
-    where: { entity: { companyName } },
+  return await prisma.company.findFirst({
+    where: { entity: { username: companyName } },
     include: { entity: true },
   });
 };

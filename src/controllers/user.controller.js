@@ -18,7 +18,19 @@ export const signIn = async (req, res) => {
   return res.status(200).json({ message: "User signed in successfully", user });
 };
 export const signUp = async (req, res) => {
-  const { username, password } = req.body;
+  const {
+    username,
+    password,
+    firstName,
+    lastName,
+    email,
+    address,
+    phoneNumber,
+    state,
+    city,
+    gender,
+    birthDate,
+  } = req.body;
 
   try {
     // Check if the user already exists
@@ -34,6 +46,15 @@ export const signUp = async (req, res) => {
     const newUser = await createNewUser({
       username,
       password: hashedPassword,
+      firstName,
+      lastName,
+      email,
+      address,
+      phoneNumber,
+      state,
+      city,
+      gender,
+      birthDate,
     });
 
     // Respond with success message

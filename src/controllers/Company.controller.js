@@ -2,6 +2,7 @@ import {
   createNewCompany,
   getCompanyByCompanyName,
 } from "../services/company.service.js";
+import bcrypt from "bcrypt";
 
 export const signUpCompany = async (req, res) => {
   const { username, password } = req.body;
