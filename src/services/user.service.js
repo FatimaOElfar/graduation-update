@@ -52,3 +52,10 @@ export const updateUserPassword = async (userId, hashedPassword) => {
     },
   });
 };
+
+export const getUserById = async (id) => {
+  return await prisma.user.findUnique({
+    where: { id },
+    include: { entity: true },
+  });
+};

@@ -3,6 +3,7 @@ import {
   createNewUser,
   getUserByEmail,
   updateUserPassword,
+  getUserById,
 } from "../services/user.service.js";
 import bcrypt from "bcrypt";
 export const signIn = async (req, res) => {
@@ -28,19 +29,14 @@ export const signUp = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    // Check if the user already exists
     const user = await getUserByUsername(username);
     if (user) {
       return res.status(400).json({ message: "User already exists", error: 1 });
     }
 
-    // Hash the password
     req.body.password = await bcrypt.hash(password, 10);
 
-    // Create new user
     const newUser = await createNewUser(req.body);
-
-    // Respond with success message
     return res
       .status(200)
       .json({ message: "User created successfully", user: newUser });
@@ -51,7 +47,27 @@ export const signUp = async (req, res) => {
 };
 
 export const getById = async (req, res) => {
-  return res.send("test getById");
+  const { id } = req.params;
+
+  // Log the request params
+  console.log("Request Params:", req.params);
+
+  if (!id) {
+    return res.status(400).json({ message: "ID is required", error: 1 });
+  }
+
+  try {
+    const user = await getUserById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found", error: 1 });
+    }
+
+    return res.status(200).json({ message: "User found", data: user });
+  } catch (error) {
+    console.error("Error fetching user by ID:", error);
+    return res.status(500).send("Internal server error");
+  }
 };
 export const resetPassword = async (req, res) => {
   const { email, newPassword } = req.body;

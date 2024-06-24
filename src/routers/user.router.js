@@ -1,6 +1,11 @@
 import { Router } from "express";
 import routers_interface from "../utils/routers.interface.js";
-import { signIn, getById, signUp,resetPassword } from "../controllers/user.controller.js";
+import {
+  signIn,
+  getById,
+  signUp,
+  resetPassword,
+} from "../controllers/user.controller.js";
 
 const router = Router();
 
