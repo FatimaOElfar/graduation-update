@@ -2,6 +2,7 @@ import {
   getUserByUsername,
   createNewUser,
   getUserByEmail,
+  updateUserPassword,
 } from "../services/user.service.js";
 import bcrypt from "bcrypt";
 export const signIn = async (req, res) => {
@@ -19,11 +20,6 @@ export const signIn = async (req, res) => {
     return res.status(400).json({ message: "Invalid password", error: 1 });
   }
 
-  // const profile = {
-  //   ...user.profile,
-  //   username: user.entity.username,
-
-  // };
   delete user.entity;
   delete user.entityId;
   return res.status(200).json({ message: "User signed in successfully" });
@@ -56,4 +52,28 @@ export const signUp = async (req, res) => {
 
 export const getById = async (req, res) => {
   return res.send("test getById");
+};
+export const resetPassword = async (req, res) => {
+  const { email, newPassword } = req.body;
+  if (!email || !newPassword) {
+    return res
+      .status(400)
+      .json({ message: "Email and new password are required", error: 1 });
+  }
+
+  try {
+    const user = await getUserByEmail(email);
+    if (!user || !user.entity) {
+      return res.status(400).json({ message: "Email not found", error: 1 });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await updateUserPassword(user.id, hashedPassword);
+
+    return res.status(200).json({ message: "Password reset successfully" });
+  } catch (error) {
+    console.error("Error resetting password:", error);
+    return res.status(500).send("Internal server error");
+  }
 };

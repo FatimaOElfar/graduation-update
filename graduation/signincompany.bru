@@ -6,6 +6,15 @@ meta {
 
 post {
   url: http://localhost:3000/company/signin
-  body: none
+  body: json
   auth: none
+}
+
+body:json {
+  
+    { 
+    "email": "mail@gmail",
+    "password": "test-password"
+  }
+  
 }

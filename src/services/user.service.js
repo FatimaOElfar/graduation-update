@@ -39,3 +39,16 @@ export const getUserByEmail = async (email) => {
     include: { entity: true },
   });
 };
+
+export const updateUserPassword = async (userId, hashedPassword) => {
+  return await prisma.user.update({
+    where: { id: userId },
+    data: {
+      entity: {
+        update: {
+          hashed_password: hashedPassword,
+        },
+      },
+    },
+  });
+};

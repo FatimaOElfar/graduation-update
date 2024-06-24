@@ -5,6 +5,7 @@ export default {
     getById: "/user",
     signin: "/user/signin",
     signup: "/user/signup",
+    resetpassword: "/user/reset-password",
   },
 
   company: {
