@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: http://localhost:3000/user/signup
+  url: http://localhost:5005/user/signup
   body: json
   auth: none
 }
@@ -16,12 +16,15 @@ body:json {
         "firstName": "bjhbjd",
         "lastName": "bjhbj",
         "phoneNumber":"mnbjhbjl",
-        "address":"nknj",
-        "state":"mbjbvjhchbkjx",
-        "city":"bkjvbjk",
+  
+        "confirmPassword":"test-password",     
         "gender":"bjbvjkc",
         "birthDate":" nbcjb",
-        "username": "test-userrrr",
+        "username": "test-ussr",
         "password": "test-password"
   }
+}
+
+body:multipart-form {
+  ~`firstName`: @file()
 }
