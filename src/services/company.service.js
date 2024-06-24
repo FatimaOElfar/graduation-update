@@ -6,12 +6,13 @@ export const createNewCompany = async (company) => {
       profile: {
         companyName: company.companyName,
         password: company.password,
+        confirmPassword: company.confirmPassword,
         email: company.email,
         phoneNumber: company.phoneNumber,
         address: company.address,
         TIN: company.TIN,
         yearOfEstablish: company.yearOfEstablish,
-        website: company.website,
+        description: company.description,
         companySize: company.companySize,
       },
       entity: {
@@ -38,3 +39,16 @@ export const getCompanyByEmail = async (email) => {
     include: { entity: true },
   });
 };
+export const getAllCompanies = async () => {
+  return await prisma.company.findMany({
+    include: {
+      entity: true,
+    },
+  });
+};
+// export const getCompanyByTIN = async (TIN,email) => {
+//   return await prisma.company.findFirst({
+//     where: { entity: { TIN } },
+//     include: { entity: true },
+//   });
+// };

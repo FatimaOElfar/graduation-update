@@ -4,6 +4,7 @@ import {
   getUserByEmail,
   updateUserPassword,
   getUserById,
+  getAllUser,
 } from "../services/user.service.js";
 import bcrypt from "bcrypt";
 export const signIn = async (req, res) => {
@@ -90,6 +91,16 @@ export const resetPassword = async (req, res) => {
     return res.status(200).json({ message: "Password reset successfully" });
   } catch (error) {
     console.error("Error resetting password:", error);
+    return res.status(500).send("Internal server error");
+  }
+};
+
+export const showAllUser = async (req, res) => {
+  try {
+    const user = await getAllUser();
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error("Error retrieving users:", error);
     return res.status(500).send("Internal server error");
   }
 };

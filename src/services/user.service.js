@@ -8,10 +8,8 @@ export const createNewUser = async (user) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        address: user.address,
         phoneNumber: user.phoneNumber,
-        state: user.state,
-        city: user.city,
+        confirmPassword: user.confirmPassword,
         gender: user.gender,
         birthDate: user.birthDate,
       },
@@ -57,5 +55,13 @@ export const getUserById = async (id) => {
   return await prisma.user.findUnique({
     where: { id },
     include: { entity: true },
+  });
+};
+
+export const getAllUser = async () => {
+  return await prisma.user.findMany({
+    include: {
+      entity: true,
+    },
   });
 };

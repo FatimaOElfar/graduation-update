@@ -2,6 +2,7 @@ import {
   createNewCompany,
   getCompanyByCompanyName,
   getCompanyByEmail,
+  getAllCompanies,
 } from "../services/company.service.js";
 import bcrypt from "bcrypt";
 
@@ -16,7 +17,8 @@ export const signUpCompany = async (req, res) => {
     address,
     TIN,
     yearOfEstablish,
-    website,
+    confirmPassword,
+    description,
     companySize,
   } = req.body;
 
@@ -42,7 +44,8 @@ export const signUpCompany = async (req, res) => {
       address,
       TIN,
       yearOfEstablish,
-      website,
+      confirmPassword,
+      description,
       companySize,
     });
 
@@ -56,14 +59,12 @@ export const signUpCompany = async (req, res) => {
   }
 };
 export const signInCompany = async (req, res) => {
-  const { email, password } = req.body;
-  const company = await getCompanyByEmail(email);
+  const { email, password, TIN } = req.body;
+  const company = await getCompanyEmail(email);
   if (!company || !company?.entity) {
     return res.status(400).json({ message: "Company not found", error: 1 });
   }
-  // if (company?.entity?.email !== email) {
-  //   return res.status(400).json({ message: "Invalid email", error: 1 });
-  // }
+
   const isPasswordValid = await bcrypt.compare(
     password,
     company?.entity?.hashed_password
@@ -74,4 +75,13 @@ export const signInCompany = async (req, res) => {
   delete company.entity;
   delete company.entityId;
   return res.status(200).json({ message: "Company signed in successfully" });
+};
+export const showAll = async (req, res) => {
+  try {
+    const companies = await getAllCompanies();
+    return res.status(200).json(companies);
+  } catch (error) {
+    console.error("Error retrieving companies:", error);
+    return res.status(500).send("Internal server error");
+  }
 };
