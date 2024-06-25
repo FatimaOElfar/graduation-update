@@ -25,6 +25,7 @@ CREATE TABLE `entity` (
     `id` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `username` VARCHAR(191) NOT NULL,
+    `TIN` VARCHAR(191) NULL,
     `hashed_password` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 

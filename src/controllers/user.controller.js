@@ -50,9 +50,6 @@ export const signUp = async (req, res) => {
 export const getById = async (req, res) => {
   const { id } = req.params;
 
-  // Log the request params
-  console.log("Request Params:", req.params);
-
   if (!id) {
     return res.status(400).json({ message: "ID is required", error: 1 });
   }

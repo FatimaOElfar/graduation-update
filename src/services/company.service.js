@@ -5,8 +5,6 @@ export const createNewCompany = async (company) => {
       metadata: {},
       profile: {
         companyName: company.companyName,
-        password: company.password,
-        confirmPassword: company.confirmPassword,
         email: company.email,
         phoneNumber: company.phoneNumber,
         address: company.address,
@@ -33,22 +31,12 @@ export const getCompanyByCompanyName = async (companyName) => {
   });
 };
 
-export const getCompanyByEmail = async (email) => {
+export const getCompanyByEmailTIN = async (email, TIN) => {
   return await prisma.company.findFirst({
-    where: { entity: { email } },
+    where: { entity: { email, TIN } },
     include: { entity: true },
   });
 };
 export const getAllCompanies = async () => {
-  return await prisma.company.findMany({
-    include: {
-      entity: true,
-    },
-  });
+  return await prisma.company.findMany();
 };
-// export const getCompanyByTIN = async (TIN,email) => {
-//   return await prisma.company.findFirst({
-//     where: { entity: { TIN } },
-//     include: { entity: true },
-//   });
-// };

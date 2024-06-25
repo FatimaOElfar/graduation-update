@@ -1,30 +1,17 @@
 import {
   createNewCompany,
   getCompanyByCompanyName,
-  getCompanyByEmail,
   getAllCompanies,
+  getCompanyByEmailTIN,
 } from "../services/company.service.js";
-import bcrypt from "bcrypt";
+import bcrypt, { compare } from "bcrypt";
 
 export const signUpCompany = async (req, res) => {
-  const {
-    username,
-    password: hashedPassword,
-    companyName,
-    password,
-    email,
-    phoneNumber,
-    address,
-    TIN,
-    yearOfEstablish,
-    confirmPassword,
-    description,
-    companySize,
-  } = req.body;
+  const { companyName, password } = req.body;
 
   try {
     // Check if the user already exists
-    const company = await getCompanyByCompanyName(username);
+    const company = await getCompanyByCompanyName(companyName);
     if (company) {
       return res
         .status(400)
@@ -36,17 +23,8 @@ export const signUpCompany = async (req, res) => {
 
     // Create new user
     const newCompany = await createNewCompany({
-      username,
+      ...req.body,
       password: hashedPassword,
-      companyName,
-      email,
-      phoneNumber,
-      address,
-      TIN,
-      yearOfEstablish,
-      confirmPassword,
-      description,
-      companySize,
     });
 
     // Respond with success message
@@ -60,7 +38,7 @@ export const signUpCompany = async (req, res) => {
 };
 export const signInCompany = async (req, res) => {
   const { email, password, TIN } = req.body;
-  const company = await getCompanyEmail(email);
+  const company = await getCompanyByEmailTIN(email, TIN);
   if (!company || !company?.entity) {
     return res.status(400).json({ message: "Company not found", error: 1 });
   }
@@ -72,14 +50,15 @@ export const signInCompany = async (req, res) => {
   if (!isPasswordValid) {
     return res.status(400).json({ message: "Invalid password", error: 1 });
   }
-  delete company.entity;
-  delete company.entityId;
   return res.status(200).json({ message: "Company signed in successfully" });
 };
 export const showAll = async (req, res) => {
   try {
-    const companies = await getAllCompanies();
-    return res.status(200).json(companies);
+    var companies = await getAllCompanies();
+    return res.status(200).json({
+      message: "Successfully fetched all companies",
+      data: [...companies],
+    });
   } catch (error) {
     console.error("Error retrieving companies:", error);
     return res.status(500).send("Internal server error");
