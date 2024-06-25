@@ -27,10 +27,10 @@ export const signIn = async (req, res) => {
   return res.status(200).json({ message: "User signed in successfully" });
 };
 export const signUp = async (req, res) => {
-  const { username, password } = req.body;
+  const { password, email } = req.body;
 
   try {
-    const user = await getUserByUsername(username);
+    const user = await getUserByUsername(email);
     if (user) {
       return res.status(400).json({ message: "User already exists", error: 1 });
     }
@@ -61,6 +61,8 @@ export const getById = async (req, res) => {
       return res.status(404).json({ message: "User not found", error: 1 });
     }
 
+    delete user.entity;
+    delete user.password;
     return res.status(200).json({ message: "User found", data: user });
   } catch (error) {
     console.error("Error fetching user by ID:", error);
