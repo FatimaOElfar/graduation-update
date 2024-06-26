@@ -4,14 +4,14 @@ import {
   getAllCompanies,
   getCompanyByEmailTIN,
 } from "../services/company.service.js";
-import bcrypt, { compare } from "bcrypt";
+import bcrypt from "bcrypt";
 
 export const signUpCompany = async (req, res) => {
-  const { companyName, password } = req.body;
+  const { TIN, password, email } = req.body;
 
   try {
     // Check if the user already exists
-    const company = await getCompanyByCompanyName(companyName);
+    const company = await getCompanyByEmailTIN(email, TIN);
     if (company) {
       return res
         .status(400)

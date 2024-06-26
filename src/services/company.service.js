@@ -18,6 +18,7 @@ export const createNewCompany = async (company) => {
           email: company.email,
           username: company.companyName,
           hashed_password: company.password,
+          TIN: company.TIN,
         },
       },
     },
