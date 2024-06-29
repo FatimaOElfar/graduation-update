@@ -22,12 +22,7 @@ export const createNewUser = async (user) => {
   });
 };
 
-// export const getUserByUsername = async (email) => {
-//   return await prisma.user.findFirst({
-//     where: { entity: { email } },
-//     include: { entity: false },
-//   });
-// };
+
 
 export const getUserByEmail = async (email) => {
   return await prisma.user.findFirst({
@@ -49,10 +44,19 @@ export const updateUserPassword = async (userId, hashedPassword) => {
   });
 };
 
-export const getUserById = async (id) => {
+export const getUserById = async (id, include) => {
+  if (!id) return null;
   return await prisma.user.findUnique({
     where: { id },
     include: { entity: false },
+  });
+};
+
+export const getUserByIdAndCV = async (id) => {
+  if (!id) return null;
+  return await prisma.user.findUnique({
+    where: { id },
+    include: { entity: false, cv: true },
   });
 };
 

@@ -8,7 +8,7 @@ import bcrypt from "bcrypt";
 export const signIn = async (req, res) => {
   const { password, email } = req.body;
   const user = await getUserByEmail(email);
-  // console.log(!user?.entity);
+
   if (!user) {
     return res.status(400).json({ message: "Email not found", error: 1 });
   }
@@ -31,6 +31,7 @@ export const signUp = async (req, res) => {
 
   try {
     const user = await getUserByEmail(email);
+
     if (user) {
       return res.status(201).json({ message: "User already exists", error: 1 });
     }
