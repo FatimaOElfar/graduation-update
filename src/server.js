@@ -10,6 +10,7 @@ class Server {
 
   middlewares() {
     this.server.use(express.json());
+    this.server.use(express.static("upload"))
   }
 
   routes() {

@@ -26,7 +26,7 @@ model cv {
 model entity {
   id              String   @id @default(uuid())
   email           String
-  username        String
+  
   TIN             String?
   hashed_password String
   created_at      DateTime @default(now())

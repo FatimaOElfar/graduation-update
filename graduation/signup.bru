@@ -5,24 +5,28 @@ meta {
 }
 
 post {
-  url: https://fatmaomar.me/user/signup
+  url: https://gradutaion-d2b3c67047d4.herokuapp.com/api/v1/users/signup
   body: json
   auth: none
 }
 
 body:json {
   {
-        "email": "maillljjj@",
-        "firstName": "bjhbjd",
-        "lastName": "bjhbj",
-        "phoneNumber":"mnbjhbjl",
-        "gender":"bjbvjkc",
-        "birthDate":" nbcjb",
-        "username": "test-usggggsssr",
+        "email": "fatmkkaa@gmail.com",
+        "firstName": "fat",
+        "lastName": "fat",
+        "phoneNumber":"01233456",
+        "gender":"male",
+        "birthDate":"2024/6/2",
         "password": "test-password"
-  }
+  } 
 }
 
 body:multipart-form {
   ~`firstName`: @file()
+}
+
+script:pre-request {
+  const timestamp = new Date().getTime();
+  console.log(timestamp)
 }

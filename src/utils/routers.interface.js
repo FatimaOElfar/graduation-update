@@ -1,25 +1,37 @@
 export default {
   api: `/api/${process.env.API_VERSION || "v1"}`,
 
+  images: {
+    get: "/images/:filename",
+  },
+
+  //http://localhost:3000/api/v1/user/signin
   user: {
     getById: "/users/:id",
-    signin: "/user/signin",
-    signup: "/user/signup",
-    resetpassword: "/user/reset-password",
-    showAllUser: "/user/showAllUser",
+    signin: "/users/signin",
+    signup: "/users/signup",
+    resetpassword: "/users/reset-password",
   },
 
   company: {
     signin: "/company/signin",
     signup: "/company/signup",
-    showAll: "/company/showAll",
+    showAll: "/companys",
+    getById: "/companys/:id",
   },
 
   cv: {
-    getAll: "/cv/all",
-    getById: "/cv/:id",
-    create: "/cv/create",
-    update: "/cv/update/:id",
-    delete: "/cv/delete/:id",
+    getAll: "/cvs",
+    getById: "/cvs/:id",
+    create: "/cvs",
+    update: "/cvs/:id",
+    delete: "/cvs/:id",
   },
+  // RESTFULL_WAY: {
+  //   getAll: "/cvs",
+  //   getById: "/cvs/:id",
+  //   create: "/cvs", // POST
+  //   update: "/cvs", // PUT
+  //   delete: "/cvs/:id", // DELETE
+  // },
 };

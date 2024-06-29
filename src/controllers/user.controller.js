@@ -1,19 +1,17 @@
 import {
-  getUserByUsername,
   createNewUser,
   getUserByEmail,
   updateUserPassword,
   getUserById,
-  getAllUser,
 } from "../services/user.service.js";
 import bcrypt from "bcrypt";
 export const signIn = async (req, res) => {
   const { password, email } = req.body;
   const user = await getUserByEmail(email);
-  if (!user || !user?.entity) {
+  // console.log(!user?.entity);
+  if (!user) {
     return res.status(400).json({ message: "Email not found", error: 1 });
   }
-
   const isPasswordValid = await bcrypt.compare(
     password,
     user?.entity?.hashed_password
@@ -24,21 +22,32 @@ export const signIn = async (req, res) => {
 
   delete user.entity;
   delete user.entityId;
+  delete user.metadata;
   return res.status(200).json({ message: "User signed in successfully" });
 };
+
 export const signUp = async (req, res) => {
   const { password, email } = req.body;
 
   try {
-    const user = await getUserByUsername(email);
+    const user = await getUserByEmail(email);
     if (user) {
-      return res.status(400).json({ message: "User already exists", error: 1 });
+      return res.status(201).json({ message: "User already exists", error: 1 });
     }
 
     req.body.password = await bcrypt.hash(password, 10);
 
     const newUser = await createNewUser(req.body);
+
+    newUser.profile.birthDate = parseInt(
+      new Date(newUser.profile.birthDate).getTime() + ""
+    );
+
+    delete newUser.entity;
+    delete newUser.entityId;
+    delete newUser.metadata;
     return res
+
       .status(200)
       .json({ message: "User created successfully", user: newUser });
   } catch (error) {
@@ -61,8 +70,6 @@ export const getById = async (req, res) => {
       return res.status(404).json({ message: "User not found", error: 1 });
     }
 
-    delete user.entity;
-    delete user.password;
     return res.status(200).json({ message: "User found", data: user });
   } catch (error) {
     console.error("Error fetching user by ID:", error);
@@ -94,12 +101,12 @@ export const resetPassword = async (req, res) => {
   }
 };
 
-export const showAllUser = async (req, res) => {
-  try {
-    const user = await getAllUser();
-    return res.status(200).json(user);
-  } catch (error) {
-    console.error("Error retrieving users:", error);
-    return res.status(500).send("Internal server error");
-  }
-};
+// export const showAllUser = async (req, res) => {
+//   try {
+//     const user = await getAllUser();
+//     return res.status(200).json(user);
+//   } catch (error) {
+//     console.error("Error retrieving users:", error);
+//     return res.status(500).send("Internal server error");
+//   }
+// };

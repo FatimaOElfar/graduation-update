@@ -5,8 +5,8 @@ meta {
 }
 
 post {
-  url: https://fatmaomar.me/company/signup
-  body: json
+  url: http://localhost:5005/api/v1/company/signup
+  body: multipartForm
   auth: none
 }
 
@@ -27,4 +27,16 @@ body:json {
        "username":"gggghhggggg",
     "password": "test-password"
   }
+}
+
+body:multipart-form {
+  image: @file(C:\Users\Fatma\OneDrive\سطح المكتب\fatma (2).jpg)
+  companyName: company
+  email: jjjkllhlhllhil@mail
+  phoneNumber: 01122255
+  address: giza
+  TIN: 6546459
+  companySize: companySize
+  description: anything 
+  password: test-password
 }

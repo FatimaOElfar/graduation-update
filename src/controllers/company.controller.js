@@ -1,6 +1,5 @@
 import {
   createNewCompany,
-  getCompanyByCompanyName,
   getAllCompanies,
   getCompanyByEmailTIN,
 } from "../services/company.service.js";
@@ -14,7 +13,7 @@ export const signUpCompany = async (req, res) => {
     const company = await getCompanyByEmailTIN(email, TIN);
     if (company) {
       return res
-        .status(400)
+        .status(201)
         .json({ message: "Company already exists", error: 1 });
     }
 
@@ -22,12 +21,15 @@ export const signUpCompany = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create new user
+    req.body.image = req.file.filename;
     const newCompany = await createNewCompany({
       ...req.body,
       password: hashedPassword,
     });
 
     // Respond with success message
+    delete newCompany.entityId;
+    delete newCompany.metadata;
     return res
       .status(200)
       .json({ message: "Company created successfully", company: newCompany });
@@ -50,6 +52,9 @@ export const signInCompany = async (req, res) => {
   if (!isPasswordValid) {
     return res.status(400).json({ message: "Invalid password", error: 1 });
   }
+  delete company.entity;
+  delete company.entityId;
+  delete company.metadata;
   return res.status(200).json({ message: "Company signed in successfully" });
 };
 export const showAll = async (req, res) => {
@@ -64,3 +69,5 @@ export const showAll = async (req, res) => {
     return res.status(500).send("Internal server error");
   }
 };
+
+export const getById = async (req, res) => {};
