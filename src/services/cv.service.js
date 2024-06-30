@@ -32,11 +32,22 @@ export const getCVByUserId = async (userId) => {
   });
 };
 
-export const updateCVByUserId = async (userId, cv) => {
+export const updateCVByUserId = async ({ userId, ...cv }) => {
   return await prisma.cv.update({
     where: {
       userId,
     },
-    data: cv,
+    data: { metadata: cv },
   });
+};
+
+export const findCvsByJobPosition = async (job_position) => {
+  const cvs = await prisma.cv.findMany({
+    where: {
+      job_position: {
+        contains: job_position,
+      },
+    },
+  });
+  return cvs;
 };

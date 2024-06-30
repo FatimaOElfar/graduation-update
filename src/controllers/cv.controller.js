@@ -78,16 +78,14 @@ export const getCV = async (req, res) => {
 
 export const updateCV = async (req, res) => {
   const { id } = req.params;
+
   const user = await getUserByIdAndCV(id);
   if (!user) {
     return res.status(401).json({ message: "User not found", error: 1 });
   }
-
   if (!user.cv) {
     return res.status(401).json({ message: "Cv not found", error: 1 });
   }
-
-  const updatedCV = await updateCVByUserId(id, req.body);
-
-  res.status(200).json({ message: "CV updated successfully", data: updatedCV });
+  const updatedCV = await updateCVByUserId(req.body);
+  res.status(200).json({ message: "CV updated successfully" });
 };

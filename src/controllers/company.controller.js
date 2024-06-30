@@ -2,6 +2,7 @@ import {
   createNewCompany,
   getAllCompanies,
   getCompanyByEmailTIN,
+  getCompanyById,
 } from "../services/company.service.js";
 import bcrypt from "bcrypt";
 
@@ -9,7 +10,6 @@ export const signUpCompany = async (req, res) => {
   const { TIN, password, email } = req.body;
 
   try {
-    // Check if the user already exists
     const company = await getCompanyByEmailTIN(email, TIN);
     if (company) {
       return res
@@ -17,17 +17,14 @@ export const signUpCompany = async (req, res) => {
         .json({ message: "Company already exists", error: 1 });
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user
     req.body.image = req.file.filename;
     const newCompany = await createNewCompany({
       ...req.body,
       password: hashedPassword,
     });
 
-    // Respond with success message
     delete newCompany.entityId;
     delete newCompany.metadata;
     return res
@@ -70,4 +67,23 @@ export const showAll = async (req, res) => {
   }
 };
 
-export const getById = async (req, res) => {};
+export const getById = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({ message: "ID is required", error: 1 });
+  }
+
+  try {
+    const company = await getCompanyById(id);
+
+    if (!company) {
+      return res.status(404).json({ message: "company  not found", error: 1 });
+    }
+
+    return res.status(200).json({ message: "company found", data: company });
+  } catch (error) {
+    console.error("Error fetching company by ID:", error);
+    return res.status(500).send("Internal server error");
+  }
+};

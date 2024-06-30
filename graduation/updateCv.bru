@@ -5,7 +5,69 @@ meta {
 }
 
 put {
-  url: http://localhost:5005/api/v1/cvs/id
-  body: none
+  url: http://localhost:5005/api/v1/cvs/757f00af-0d16-4226-a762-f079e66c4d56
+  body: json
   auth: none
+}
+
+body:json {
+  {    
+    "userId": "757f00af-0d16-4226-a762-f079e66c4d56",
+  
+        "job_position": "Developer",
+      "declaration": {
+        "description": "Sample declaration",
+        "date": "2023-12-31",
+        "place": "City"
+  
+      },
+      "careerObjective": {
+        "description": "Career objective",
+        "experience": "5 years"
+      },
+      "reference": {
+        "referenceName": "John Doe",
+        "designation": "Manager",
+        "organization": "Company"
+      },
+      "techSkills": ["JavaScript", "React"],
+      "education": {
+        "course": "Computer Science",
+        "collage": "University Name",
+        "GPA": 3.8,
+        "yearOfPass": 2022
+      },
+      "personalDetails": {
+        "DOB": "1990-01-01",
+        "maritalStatus": "Single",
+        "language": "English",
+        "nationality": "Country"
+      },
+      "projects": {
+        "projectTitle": "Project Title",
+        "technologies": ["React", "Node.js"],
+        "roles": "Developer",
+        "tech": "JavaScript",
+        "projectDescription": "Project des"
+      },
+      "resumaWorkSpace": {
+        "Name": "User Name",
+        "email": "user@example.com",
+        "phone": "1234567890",
+        "address": ["Address Line 1","Address"]
+  
+        
+      },
+      "hobbies": ["Reading", "Traveling"],
+      "experience": {
+        "companyName": "Company Name",
+        "collage": "College Name",
+        "roles": "Developer",
+        "employStatus": "Employed",
+        "dateJoined": "2020-01-01"
+      },
+      "achievement": ["Achievement 1", "Achiev"]
+  
+  
+    }
 }

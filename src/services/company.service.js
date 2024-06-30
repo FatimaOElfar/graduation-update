@@ -34,3 +34,23 @@ export const getCompanyByEmailTIN = async (email, TIN) => {
 export const getAllCompanies = async () => {
   return await prisma.company.findMany();
 };
+
+export const getCompanyById = async (id, include) => {
+  if (!id) return null;
+  return await prisma.company.findUnique({
+    where: { id },
+    include: { entity: false },
+  });
+};
+export const findCompanyByName = async (companyName) => {
+  const companies = await prisma.company.findMany({
+    where: {
+      companyName: {
+        contains: companyName,
+      },
+    },
+  });
+  console.log(companyName);
+
+  return companies;
+};

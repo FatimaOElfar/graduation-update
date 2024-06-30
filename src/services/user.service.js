@@ -22,8 +22,6 @@ export const createNewUser = async (user) => {
   });
 };
 
-
-
 export const getUserByEmail = async (email) => {
   return await prisma.user.findFirst({
     where: { entity: { email } },
@@ -65,5 +63,12 @@ export const getAllUser = async () => {
     include: {
       entity: false,
     },
+  });
+};
+
+export const getUserByEmailPassword = async (email, hashed_password) => {
+  return await prisma.user.findFirst({
+    where: { entity: { email, hashed_password } },
+    include: { entity: true },
   });
 };
