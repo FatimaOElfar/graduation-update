@@ -1,7 +1,7 @@
 meta {
   name: signIn
   type: http
-  seq: 2
+  seq: 1
 }
 
 post {
@@ -10,9 +10,13 @@ post {
   auth: none
 }
 
+headers {
+  authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxOTExNWQwNS1kZDAxLTQwZDUtYWM2NC02NWIyMmRmYTQ5OTciLCJpYXQiOjE3MTk3NjIwOTgsImV4cCI6MTcxOTc2Mzg5OH0.1sBRfWzzrfHCFvSraTYdgU2SNsUy8-lsWNHP95yFR2g
+}
+
 body:json {
   { 
-    "email": "alicegmail.com",
+    "email": "fatmmaaaa@gmail.com",
     "password": "test-password"
   }
   

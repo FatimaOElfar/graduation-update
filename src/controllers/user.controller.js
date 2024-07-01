@@ -1,12 +1,13 @@
 import {
   createNewUser,
   getUserByEmail,
-  updateUserPassword,
   getUserById,
   getAllUser,
   getUserByEmailPassword,
 } from "../services/user.service.js";
+import { generateAccessToken } from "../middlewares/authenticate.js";
 import bcrypt from "bcrypt";
+import { redis } from "../db/redis.js";
 export const signIn = async (req, res) => {
   const { password, email } = req.body;
   const user = await getUserByEmail(email);
@@ -41,7 +42,6 @@ export const signUp = async (req, res) => {
     req.body.password = await bcrypt.hash(password, 10);
 
     const newUser = await createNewUser(req.body);
-
     newUser.profile.birthDate = parseInt(
       new Date(newUser.profile.birthDate).getTime() + ""
     );
@@ -49,10 +49,14 @@ export const signUp = async (req, res) => {
     delete newUser.entity;
     delete newUser.entityId;
     delete newUser.metadata;
-    return res
 
-      .status(200)
-      .json({ message: "User created successfully", user: newUser });
+    const token = generateAccessToken(req.body);
+
+    return res.status(200).json({
+      message: `User created successfully.`,
+      token,
+      user: newUser,
+    });
   } catch (error) {
     console.error("-----error----", error);
     return res.status(500).send("Internal server error");
@@ -79,35 +83,11 @@ export const getById = async (req, res) => {
     return res.status(500).send("Internal server error");
   }
 };
-export const resetPassword = async (req, res) => {
-  const { email, newPassword } = req.body;
-  if (!email || !newPassword) {
-    return res
-      .status(400)
-      .json({ message: "Email and new password are required", error: 1 });
-  }
-
-  try {
-    const user = await getUserByEmail(email);
-    if (!user || !user.entity) {
-      return res.status(400).json({ message: "Email not found", error: 1 });
-    }
-
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    await updateUserPassword(user.id, hashedPassword);
-
-    return res.status(200).json({ message: "Password reset successfully" });
-  } catch (error) {
-    console.error("Error resetting password:", error);
-    return res.status(500).send("Internal server error");
-  }
-};
 
 export const showAllUser = async (req, res) => {
   try {
-    const user = await getAllUser();
-    return res.status(200).json(user);
+    const users = await getAllUser();
+    return res.status(200).json(users);
   } catch (error) {
     console.error("Error retrieving users:", error);
     return res.status(500).send("Internal server error");

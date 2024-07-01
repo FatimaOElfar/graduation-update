@@ -5,6 +5,7 @@ import {
   getCompanyById,
 } from "../services/company.service.js";
 import bcrypt from "bcrypt";
+import { generateAccessToken } from "../middlewares/authenticate.js";
 
 export const signUpCompany = async (req, res) => {
   const { TIN, password, email } = req.body;
@@ -25,11 +26,17 @@ export const signUpCompany = async (req, res) => {
       password: hashedPassword,
     });
 
+    const token = generateAccessToken({ entityId: newCompany.entityId });
+
     delete newCompany.entityId;
     delete newCompany.metadata;
     return res
       .status(200)
-      .json({ message: "Company created successfully", company: newCompany });
+      .json({
+        message: "Company created successfully",
+        token,
+        company: newCompany,
+      });
   } catch (error) {
     console.error("-----error----", error);
     return res.status(500).send("Internal server error");

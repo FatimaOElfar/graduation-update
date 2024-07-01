@@ -3,8 +3,8 @@ export const createNewCompany = async (company) => {
   return await prisma.company.create({
     data: {
       metadata: {},
+      companyName: company.companyName,
       profile: {
-        companyName: company.companyName,
         email: company.email,
         phoneNumber: company.phoneNumber,
         address: company.address,
@@ -42,7 +42,7 @@ export const getCompanyById = async (id, include) => {
     include: { entity: false },
   });
 };
-export const findCompanyByName = async (companyName) => {
+export const getCompaniesByName = async (companyName) => {
   const companies = await prisma.company.findMany({
     where: {
       companyName: {
@@ -50,7 +50,6 @@ export const findCompanyByName = async (companyName) => {
       },
     },
   });
-  console.log(companyName);
 
   return companies;
 };

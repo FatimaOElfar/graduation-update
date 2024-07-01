@@ -6,11 +6,14 @@ class Server {
     this.server = express();
     this.middlewares();
     this.routes();
+    (async () => {
+      await this.connect();
+    })();
   }
 
   middlewares() {
     this.server.use(express.json());
-    this.server.use(express.static("upload"))
+    this.server.use(express.static("upload"));
   }
 
   routes() {
@@ -18,6 +21,8 @@ class Server {
       this.server.use((await import("./routers/" + file)).default);
     });
   }
+
+  connect = async () => {};
 }
 
 export default new Server().server;

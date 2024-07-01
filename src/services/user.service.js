@@ -22,23 +22,16 @@ export const createNewUser = async (user) => {
   });
 };
 
+export const getUsersByUsername = async (username) => {
+  return await prisma.user.findMany({
+    where: { username: { contains: username } },
+  });
+};
+
 export const getUserByEmail = async (email) => {
   return await prisma.user.findFirst({
     where: { entity: { email } },
     include: { entity: true },
-  });
-};
-
-export const updateUserPassword = async (userId, hashedPassword) => {
-  return await prisma.user.update({
-    where: { id: userId },
-    data: {
-      entity: {
-        update: {
-          hashed_password: hashedPassword,
-        },
-      },
-    },
   });
 };
 

@@ -5,7 +5,11 @@ meta {
 }
 
 get {
-  url: http://localhost:5005/api/v1/position
+  url: http://localhost:5005/job?search=developer
   body: none
   auth: none
+}
+
+params:query {
+  search: developer
 }

@@ -4,18 +4,18 @@ import {
   signIn,
   getById,
   signUp,
-  resetPassword,
   showAllUser,
   signUpForApps,
 } from "../controllers/user.controller.js";
+import { authenticateToken } from "../middlewares/authenticate.js";
 
 const router = Router();
 
-router.post(routers_interface.api + routers_interface.user.signup, signUp);
-router.post(routers_interface.api + routers_interface.user.signin, signIn);
+router.post(routers_interface.api + routers_interface.user.register, signUp);
 router.post(
-  routers_interface.api + routers_interface.user.resetpassword,
-  resetPassword
+  routers_interface.api + routers_interface.user.login,
+  authenticateToken,
+  signIn
 );
 router.post(
   routers_interface.api + routers_interface.user.signupApp,

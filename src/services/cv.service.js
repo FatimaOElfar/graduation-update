@@ -24,7 +24,7 @@ export const deleteCVByUserId = async (userId) => {
 export const getCVByUserId = async (userId) => {
   return await prisma.cv.findUnique({
     where: {
-      userId: userId,
+      userId,
     },
     include: {
       user: true,
@@ -41,13 +41,12 @@ export const updateCVByUserId = async ({ userId, ...cv }) => {
   });
 };
 
-export const findCvsByJobPosition = async (job_position) => {
-  const cvs = await prisma.cv.findMany({
+export const getCvsByJobPosition = async (job_position) => {
+  return await prisma.cv.findMany({
     where: {
       job_position: {
         contains: job_position,
       },
     },
   });
-  return cvs;
 };

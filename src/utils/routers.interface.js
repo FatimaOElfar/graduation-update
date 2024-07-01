@@ -5,20 +5,25 @@ export default {
     get: "/images/:filename",
   },
 
+  entity: {
+    sendOTP: "/entities/send-otp",
+    resetpassword: "/entities/reset-password",
+    verifyEmail: "/entities/verify-email/:token",
+  },
+
   user: {
     getById: "/users/:id",
-    signin: "/users/signin",
-    signup: "/users/signup",
-    resetpassword: "/users/reset-password",
+    login: "/users/login",
+    register: "/users/register",
     showAllUser: "/users",
     signupApp: "/users",
   },
 
   company: {
-    signin: "/company/signin",
-    signup: "/company/signup",
-    showAll: "/companys",
-    getById: "/companys/:id",
+    login: "/companies/login",
+    register: "/companies/register",
+    showAll: "/companies",
+    getById: "/companies/:id",
   },
 
   cv: {
@@ -29,7 +34,8 @@ export default {
     delete: "/cvs/:id",
   },
   search: {
-    companyName: "/searchCompany/:company_name",
-    position: "/search/:job_position",
+    user: "/user",
+    company: "/company",
+    position: "/job",
   },
 };
