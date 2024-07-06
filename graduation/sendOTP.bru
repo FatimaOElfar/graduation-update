@@ -5,7 +5,17 @@ meta {
 }
 
 post {
-  url: http://localhost:5005/entities/send-otp
-  body: none
-  auth: none
+  url: http://localhost:5005/api/v1/entities/send-otp
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Ik1vc3RhZmFBZGx5QW1hcjE1QGdtYWlsLmNvbSIsImZpcnN0TmFtZSI6ImZhdCIsImxhc3ROYW1lIjoiZmF0IiwicGhvbmVOdW1iZXIiOiIwMTIzMzQ1NiIsImdlbmRlciI6Im1hbGUiLCJiaXJ0aERhdGUiOiIyMDI0LzYvMiIsInBhc3N3b3JkIjoiJDJiJDEwJHVOVW9QQkVBcWYzd0hvTFNDV2w3Ny55S1B5S1Y5TjUzT2NUeXB1YmI4dWwyNEQ0UXRWeEptIiwiaWF0IjoxNzE5Nzc4NjQwLCJleHAiOjE3MTk3ODA0NDB9.4ZRWpFpOwAiiL-psz-y_q6yPN3FWaGZd66l887fL1oI
+}
+
+body:json {
+  {
+    "email":"MostafaAdlyAmar15@gmail.com"
+  }
 }

@@ -1,22 +1,22 @@
 meta {
   name: signIn
   type: http
-  seq: 1
+  seq: 2
 }
 
 post {
-  url: http://localhost:5005/api/v1/users/signin
+  url: https://gradutaion-d2b3c67047d4.herokuapp.com/api/v1/users/login
   body: json
-  auth: none
+  auth: bearer
 }
 
-headers {
-  authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxOTExNWQwNS1kZDAxLTQwZDUtYWM2NC02NWIyMmRmYTQ5OTciLCJpYXQiOjE3MTk3NjIwOTgsImV4cCI6MTcxOTc2Mzg5OH0.1sBRfWzzrfHCFvSraTYdgU2SNsUy8-lsWNHP95yFR2g
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Ik1vc3RhZmFBZGx5QW1hcjEwQGdtYWlsLmNvbSIsImZpcnN0TmFtZSI6ImZhdCIsImxhc3ROYW1lIjoiZmF0IiwicGhvbmVOdW1iZXIiOiIwMTIzMzQ1NiIsImdlbmRlciI6Im1hbGUiLCJiaXJ0aERhdGUiOiIyMDI0LzYvMiIsInBhc3N3b3JkIjoiJDJiJDEwJGh6RDVlSnh6bzlZbzNjN1RadDBDeWVUWHV3UlZwcEkvMmNyVHZoaUwxSk9ITG5iZ2dGVjFHIiwiaWF0IjoxNzE5NzgyNTcwLCJleHAiOjE3MTk3ODQzNzB9.SX8ovqv5xD8cLYapU1lN9Fofk0ib5YGHfz3rN3jlFOY
 }
 
 body:json {
-  { 
-    "email": "fatmmaaaa@gmail.com",
+  {"email":"MostafaAdlyAmar10@gmail.com",
+  
     "password": "test-password"
   }
   

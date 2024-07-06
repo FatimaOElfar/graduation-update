@@ -9,4 +9,3 @@ export const checkIfOTPExpired = (otpCreatedAt) => {
   const otpExpiryTime = parseInt(process.env.OTP_EXPIRATION || "300");
   return otpExpiryTime > new Date() - new Date(otpCreatedAt);
 };
-//

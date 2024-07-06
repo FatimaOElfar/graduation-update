@@ -24,7 +24,7 @@ router.post(
 );
 router.get(
   routers_interface.api + routers_interface.company.showAll,
-  
+
   showAll
 );
 router.get(

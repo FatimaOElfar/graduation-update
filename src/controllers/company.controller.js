@@ -1,6 +1,7 @@
 import {
   createNewCompany,
   getAllCompanies,
+ 
   getCompanyByEmailTIN,
   getCompanyById,
 } from "../services/company.service.js";
